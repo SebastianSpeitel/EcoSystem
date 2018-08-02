@@ -1,26 +1,26 @@
 let w = 1024
 let h = 576
 let popSize = 20;
-let fauna = [];
+let lifeForms = [];
+let plantcolor;
+let nutcolor;
 
 function setup() {
+    plantcolor = color(0, 255, 0);
+    nutcolor = color(139, 69, 19);
 
     let canvas = createCanvas(w, h);
     canvas.parent('sketch-holder');
-    
+
     for (i = 0; i < popSize; i++) {
-        fauna[i] = new Fauna();
+        lifeForms.push(new Plant());
     }
 }
 
 function draw() {
 
     background(0, 0, 0, 255);
-    
-    for (i = 0; i < fauna.length; i++) {
-        fauna[i].fauna.plantShow();
-        fauna[i].fauna.herbShow();
-        fauna[i].fauna.herbMove();
-    }
-    
+
+    lifeForms.forEach(l => l.show());
+
 }
