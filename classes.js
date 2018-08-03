@@ -94,7 +94,7 @@ class Herbivore extends LifeForm {
             this.vel.lerp(rel, 0.9 * dt);
         }
         if (this.health > 20) this.split();
-        super.tick(dt);
+        super.tick(dt);50
     }
 
     split() {

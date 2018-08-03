@@ -44,26 +44,35 @@ class Creature {
         return this.opt.reproduce || false;
     }
 
+
+    get preTick() {
+        return this.opt.preTick || false;
+    }
+
     get postShow() {
         return this.opt.postShow || false;
     }
 
     show() {
-        noStroke();
+        stroke(0);
+        strokeWeight(.6);
         fill(this.color);
         ellipse(this.pos.x, this.pos.y, this.r * 2);
         if (this.postShow) this.postShow();
     }
 
     tick(dt = 1) {
+        if (this.preTick) this.preTick(dt);
         if (this.opt.movable) {
-            if (this.speed >= 0) this.vel.limit(this.speed);
             if (!this.vel) this.vel = createVector();
+            if (this.speed >= 0) this.vel.limit(this.speed);
             this.pos.add(this.vel.copy().mult(dt));
+            this.pos.x = constrain(this.pos.x, this.r, width - this.r);
+            this.pos.y = constrain(this.pos.y, this.r, height - this.r);
         }
-        if (this.radius) this.r = lerp(this.r, this.radius(), 0.1 * dt);
+        if (this.radius) this.r = lerp(this.r, this.radius(), 5 * dt);
         if (this.regen !== 0) this.health += this.regen * dt;
-        if (this.aging !== 0) this.health *= (1 - this.aging * dt);
+        if (this.aging !== 0) this.health *= (1 - this.aging) ** dt;
         if (this.reproduce && this.health > this.reproduceHealth) this.reproduce();
         if (this.health < 1) this.die();
     }
@@ -88,6 +97,10 @@ function creatureGenerator(opt = {}) {
     return class extends Creature {
         constructor() {
             super(opt);
+            if (opt.movable) this.vel = createVector();
+        }
+        static get options() {
+            return opt;
         }
     }
 }
