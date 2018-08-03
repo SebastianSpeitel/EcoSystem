@@ -1,5 +1,5 @@
 
-const createPopulation = new Set();
+const creaturePopulation = new Set();
 class Creature {
     constructor(opt = {}) {
         this.opt = opt;
@@ -87,7 +87,7 @@ class Creature {
     }
 
     static get all() {
-        return createPopulation;
+        return creaturePopulation;
     }
 
 }
