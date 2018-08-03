@@ -1,11 +1,11 @@
 let w = 1024
 let h = 576
-let popSize = 20;
-let lifeForms = new Set();
+let popSize = 100;
 let plantcolor;
 let nutcolor;
 let herbivorecolor;
 let carnivorecolor;
+let Plant, Herbivore, Carnivore;
 
 function setup() {
     plantcolor = color(0, 255, 0);
@@ -13,13 +13,36 @@ function setup() {
     herbivorecolor = color(0, 0, 255);
     carnivorecolor = color(255, 0, 0);
 
+    Plant = creatureGenerator({
+        startHealth: function () { return random(5, 10); },
+        radius: function () { return this.health; },
+        regen: -0.01,
+        color: plantcolor
+    });
+
+    Herbivore = creatureGenerator({
+        startHealth: function () { return random(5, 10); },
+        radius: function () { return this.health; },
+        regen: -0.01,
+        color: herbivorecolor,
+        speed: 25
+
+    });
+
+    Carnivore = creatureGenerator({
+        startHealth: function () { return random(5, 10); },
+        radius: function () { return this.health; },
+        regen: -0.1,
+        aging: 0.001,
+        color: carnivorecolor,
+        speed: 10
+    });
+
     let canvas = createCanvas(w, h);
     canvas.parent('sketch-holder');
 
     for (i = 0; i < popSize; i++) {
-        lifeForms.add(new Plant());
-        lifeForms.add(new Carnivore());
-        lifeForms.add(new Herbivore());
+        new Plant(); new Carnivore(); new Herbivore();
     }
 }
 
@@ -28,9 +51,9 @@ function draw() {
     background(0, 0, 0, 255);
 
     let fps = frameRate() || 60;
-    lifeForms.forEach(l => l.tick(1 / fps) || l.show());
+    Creature.all.forEach(l => l.tick(1 / fps) || l.show());
 
-    if (lifeForms.size < 100) lifeForms.add(new Plant());
+    if (Creature.all.size < 1000) new Plant();
 }
 
 function findClosest(pos, cls) {
