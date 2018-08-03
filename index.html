@@ -8,6 +8,7 @@
     <script language="javascript" type="text/javascript" src="sketch.js"></script>
     <!--<script language="javascript" type="text/javascript" src="fauna.js"></script>-->
     <script language="javascript" type="text/javascript" src="creature.js" defer></script>
+    <script language="javascript" type="text/javascript" src="chart.js"></script>
     <!-- this line removes any default padding and style. you might only need one of these values set. -->
     <style>
         body {
@@ -18,8 +19,22 @@
 </head>
 
 <body>
-<tr>
-<center><td style="text-align: center; vertical-align: top; background-color: black;"><div id="sketch-holder"></div></td></center>
-</tr>
+    <template id="creatureOption">
+        <div class="creatureOption">
+            <h4>Creature</h4>
+            <form>
+                <label>Regeneration<input name="regen" type="number" value="0" step="0.01" /></label><br />
+                <label>Aging<input name="aging" type="number" value="0" step="0.001" /></label><br />
+                <label>Max Speed<input name="speed" type="number" value="-1" min="-1" step="1" /></label><br />
+                <label>Max Health<input name="maxHealth" type="number" value="-1" min="-1" step="1" /></label><br />
+                <label>Reproduce Health<input name="reproduceHealth" type="number" value="-1" min="-1" step="1" /></label><br />
+                <label>Max Eat<input name="maxEat" type="number" value="-1" min="-1" step="1" /></label><br />
+                <label>Eat Efficiency<input name="eatEfficiency" type="number" value="1" step="0.01" /></label><br />
+                <label>Offspring Health<input name="offspringHealth" type="number" value="1" step="0.01" /></label><br />
+            </form>
+        </div>
+    </template>
+    <center><div id="sketch-holder"></div></center>
+
 </body>
 </html>
